@@ -1,0 +1,6 @@
+.idea/
+/vendor
+SnapshotAttacher.phar
+box.json
+box.phar
+composer.lock

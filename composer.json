@@ -1,0 +1,19 @@
+{
+    "name": "chicplace/snapshotattacher",
+    "authors": [
+        {
+            "name": "Miquel Company Rodriguez",
+            "email": "miquel.company@chicplace.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "symfony/console": "2.7.*@dev",
+        "aws/aws-sdk-php": "2.7.*@dev"
+    },
+    "autoload": {
+      "psr-4": { "": "src" }
+    },
+    "require-dev": {
+    }
+}
