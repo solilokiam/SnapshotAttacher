@@ -1,0 +1,20 @@
+parameters:
+    aws.key: XXXX
+    aws.secret: XXXX
+    aws.region: eu-west-1
+
+services:
+    snapshotattacher.aws.clientfactory:
+        class: SnapshotAttacher\Aws\AwsClientFactory
+        arguments:
+            - %aws.key%
+            - %aws.secret%
+            - %aws.region%
+    snapshotattacher.aws.ec2.client:
+        class: Aws\Ec2\Ec2Client
+        factory: ["@snapshotattacher.aws.clientfactory",getEc2]
+
+    snapshotattacher.waiter.volume_available:
+        class: SnapshotAttacher\Waiter\VolumeAvailableWaiter
+        arguments:
+            - @snapshotattacher.aws.ec2.client
