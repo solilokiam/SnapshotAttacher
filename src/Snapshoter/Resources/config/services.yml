@@ -1,0 +1,27 @@
+parameters:
+    aws.key: XXXX
+    aws.secret: XXXX
+    aws.region: eu-west-1
+
+services:
+    snapshoter.aws.clientfactory:
+        class: Snapshoter\Aws\AwsClientFactory
+        arguments:
+            - %aws.key%
+            - %aws.secret%
+            - %aws.region%
+    snapshoter.aws.ec2.client:
+        class: Aws\Ec2\Ec2Client
+        factory: ["@snapshoter.aws.clientfactory",getEc2]
+
+    snapshoter.aws.metadata.client:
+        class: Snapshoter\Aws\AesMetadataClient
+
+    snapshoter.waiter.volume_available:
+        class: Snapshoter\Waiter\VolumeAvailableWaiter
+        arguments:
+            - @snapshoter.aws.ec2.client
+    snapshoter.waiter.volume_in_use:
+        class: Snapshoter\Waiter\VolumeInUseWaiter
+        arguments:
+            - @snapshoter.aws.ec2.client

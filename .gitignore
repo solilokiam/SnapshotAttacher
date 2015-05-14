@@ -1,6 +1,6 @@
 .idea/
 /vendor
-SnapshotAttacher.phar
+Snapshoter.phar
 box.json
 box.phar
 composer.lock

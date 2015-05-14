@@ -1,10 +1,17 @@
 <?php
-namespace SnapshotAttacher\Waiter;
+/**
+ * Created by PhpStorm.
+ * User: miquel
+ * Date: 8/05/15
+ * Time: 14:02
+ */
+
+namespace Snapshoter\Waiter;
+
 
 use Aws\Ec2\Ec2Client;
-use SnapshotAttacher\Exception\InvalidVolumeException;
 
-class VolumeAvailableWaiter extends AbstractWaiter
+class VolumeInUseWaiter extends AbstractWaiter
 {
     protected $ec2Client;
 
@@ -23,9 +30,10 @@ class VolumeAvailableWaiter extends AbstractWaiter
         $volumes = $volumesReturn['Volumes'];
         if(count($volumes) > 0)
         {
-            return $volumes[0]['State'] == 'available';
+            return $volumes[0]['State'] == 'in_use';
         } else {
             throw new InvalidVolumeException();
         }
     }
+
 }

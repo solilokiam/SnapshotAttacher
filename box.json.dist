@@ -14,7 +14,7 @@
         }
     ],
     "git-version": "package_version",
-    "main": "bin/SnapshotAttacher",
-    "output": "SnapshotAttacher.phar",
+    "main": "bin/Snapshoter",
+    "output": "Snapshoter.phar",
     "stub": true
 }

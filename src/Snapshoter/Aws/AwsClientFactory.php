@@ -1,8 +1,8 @@
 <?php
-namespace SnapshotAttacher\Aws;
+namespace Snapshoter\Aws;
 
 use Aws\Common\Aws;
-use SnapshotAttacher\Exception\InvalidAwsContainerException;
+use Snapshoter\Exception\InvalidAwsContainerException;
 
 class AwsClientFactory
 {

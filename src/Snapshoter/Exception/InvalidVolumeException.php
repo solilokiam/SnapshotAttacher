@@ -6,7 +6,7 @@
  * Time: 13:56
  */
 
-namespace SnapshotAttacher\Exception;
+namespace Snapshoter\Exception;
 
 
 class InvalidVolumeException extends \Exception

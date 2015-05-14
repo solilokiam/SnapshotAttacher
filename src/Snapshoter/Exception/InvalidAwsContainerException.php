@@ -6,7 +6,7 @@
  * Time: 18:33
  */
 
-namespace SnapshotAttacher\Exception;
+namespace Snapshoter\Exception;
 
 
 class InvalidAwsContainerException extends \Exception

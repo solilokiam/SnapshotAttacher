@@ -6,7 +6,7 @@
  * Time: 13:25
  */
 
-namespace SnapshotAttacher\Command;
+namespace Snapshoter\Command;
 
 
 use Symfony\Component\Config\FileLocator;

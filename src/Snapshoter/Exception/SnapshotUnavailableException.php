@@ -6,7 +6,7 @@
  * Time: 10:01
  */
 
-namespace SnapshotAttacher\Exception;
+namespace Snapshoter\Exception;
 
 
 class SnapshotUnavailableException extends \Exception{

@@ -1,5 +1,5 @@
 <?php
-namespace SnapshotAttacher\Waiter;
+namespace Snapshoter\Waiter;
 
 abstract class AbstractWaiter
 {
