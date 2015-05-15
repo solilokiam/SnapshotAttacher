@@ -32,7 +32,7 @@ class AttachCommand extends ContainerAwareCommand
      */
     private function getMostRecentSnapshot($snapshotTag)
     {
-        $returnObj = $this->getContainer()->get('Snapshoter.aws.ec2.client')->describeSnapshots(
+        $returnObj = $this->getContainer()->get('snapshoter.aws.ec2.client')->describeSnapshots(
             array(
                 'OwnerIds' => array('self'),
                 'Filters' => array(
@@ -125,7 +125,7 @@ class AttachCommand extends ContainerAwareCommand
     private function getInstanceId(InputInterface $input)
     {
         if (!$input->hasOption('instance_id')) {
-            $instanceId = $this->get('snapshoter.aws.metadata.client')->getInstanceId();
+            $instanceId = $this->getContainer()->get('snapshoter.aws.metadata.client')->getInstanceId();
             $localInstance = true;
 
             return array($instanceId, $localInstance);
