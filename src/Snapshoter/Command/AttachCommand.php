@@ -154,7 +154,7 @@ class AttachCommand extends ContainerAwareCommand
             )
         );
 
-        $this->getContainer()->get('snapshoter.waiter.volume_attached')->wait(array('VolumeId' => $volumeId), 10, 3);
+        $this->getContainer()->get('snapshoter.waiter.volume_in_use')->wait(array('VolumeId' => $volumeId), 10, 3);
 
         if ($localInstance) {
             $this->getContainer()->get('snapshoter.waiter.fstab')->wait(array('device' => $deviceValue), 10, 3);

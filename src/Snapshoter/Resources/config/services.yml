@@ -1,8 +1,3 @@
-parameters:
-    aws.key: XXXX
-    aws.secret: XXXX
-    aws.region: eu-west-1
-
 services:
     snapshoter.aws.clientfactory:
         class: Snapshoter\Aws\AwsClientFactory

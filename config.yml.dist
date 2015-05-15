@@ -1,0 +1,5 @@
+snapshoter:
+    aws:
+        key: 12345
+        secret: 12345
+        region: eu-west-1
