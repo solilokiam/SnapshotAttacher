@@ -20,7 +20,7 @@ class AttachCommand extends ContainerAwareCommand
             ->addOption('device_value','dv',InputOption::VALUE_REQUIRED,'the desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. default: /dev/xvdf','/dev/xvdf')
             ->addOption('volume_size','s',InputOption::VALUE_REQUIRED,'The desired initial volume size by default it will be snapshot size')
             ->addOption('availability_zone','z',InputOption::VALUE_REQUIRED,"the availability_zone in which to create the volume",'eu-west-1b')
-            ->addOption('instance_id',null,InputOption::VALUE_REQUIRED,'The instance id to attach the new volume, if not defined it will try to do it in the current machine',null)
+            ->addOption('instance_id',null,InputOption::VALUE_REQUIRED,'The instance id to attach the new volume, if not defined it will try to do it in the current machine')
             ->addArgument('snapshot_tag',InputArgument::REQUIRED,"the snapshot tag you're looking for");
         ;
     }
@@ -124,7 +124,7 @@ class AttachCommand extends ContainerAwareCommand
      */
     private function getInstanceId(InputInterface $input)
     {
-        if (!$input->hasOption('instance_id') || $input->getOption('instance_id') !== null) {
+        if (!$input->hasOption('instance_id') || empty($input->getOption('instance_id'))) {
             $instanceId = $this->getContainer()->get('snapshoter.aws.metadata.client')->getInstanceId();
             $localInstance = true;
 
