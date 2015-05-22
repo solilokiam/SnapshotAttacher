@@ -20,3 +20,5 @@ services:
         class: Snapshoter\Waiter\VolumeInUseWaiter
         arguments:
             - @snapshoter.aws.ec2.client
+    snapshoter.waiter.fstab:
+        class: Snapshoter\Waiter\FstabWaiter
