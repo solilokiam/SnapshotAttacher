@@ -1,13 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 15/05/15
- * Time: 9:48
- */
-
 namespace Snapshoter\DependencyInjection;
-
 
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
@@ -31,14 +23,14 @@ class SnapshoterExtension implements ExtensionInterface
     {
         $processor = new Processor();
         $configurationClass = new SnapshoterConfiguration();
-        $appConfiguration = $processor->processConfiguration($configurationClass,$config);
+        $appConfiguration = $processor->processConfiguration($configurationClass, $config);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $container->setParameter('aws.key',$appConfiguration['aws']['key']);
-        $container->setParameter('aws.secret',$appConfiguration['aws']['secret']);
-        $container->setParameter('aws.region',$appConfiguration['aws']['region']);
+        $container->setParameter('aws.key', $appConfiguration['aws']['key']);
+        $container->setParameter('aws.secret', $appConfiguration['aws']['secret']);
+        $container->setParameter('aws.region', $appConfiguration['aws']['region']);
     }
 
     /**

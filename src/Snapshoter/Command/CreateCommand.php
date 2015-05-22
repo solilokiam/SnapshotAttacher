@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 14/05/15
- * Time: 18:06
- */
-
 namespace Snapshoter\Command;
 
 
@@ -20,35 +13,56 @@ class CreateCommand extends ContainerAwareCommand
     {
         $this->setName('create')
             ->setDescription('Create an EBS volume snapshot from an ec2 instance with a tag')
-            ->addOption('device','m',InputOption::VALUE_REQUIRED,'The mount point of the volume to create the snapshot.','/dev/sdf')
-            ->addOption('instance_id','i',InputOption::VALUE_REQUIRED,'The instance id in which the volume to create the snapshot is attached, if not defined it will try to do it in the current machine')
-            ->addOption('description','d',InputOption::VALUE_REQUIRED,'The description of the snapshot','Snapshot created automatically by snapshoter')
-            ->addArgument('snapshot_tag',InputArgument::REQUIRED,"the snapshot tag you're looking for");
+            ->addOption(
+                'device',
+                'm',
+                InputOption::VALUE_REQUIRED,
+                'The mount point of the volume to create the snapshot.',
+                '/dev/sdf'
+            )
+            ->addOption(
+                'instance_id',
+                'i',
+                InputOption::VALUE_REQUIRED,
+                'The instance id in which the volume to create the snapshot is attached, if not defined it will try to do it in the current machine'
+            )
+            ->addOption(
+                'description',
+                'd',
+                InputOption::VALUE_REQUIRED,
+                'The description of the snapshot',
+                'Snapshot created automatically by snapshoter'
+            )
+            ->addArgument('snapshot_tag', InputArgument::REQUIRED, "the snapshot tag you're looking for");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        list($instanceId,$local) = $this->getInstanceId($input);
+        list($instanceId, $local) = $this->getInstanceId($input);
         $device = $input->getOption('device');
         $tag = $input->getArgument('snapshot_tag');
         $description = $input->getOption('description');
 
         $volumeId = $this->getVolume($instanceId, $device);
 
-        $snapshotResult = $this->getContainer()->get('snapshoter.aws.ec2.client')->createSnapshot(array(
-            'VolumeId' => $volumeId,
-            'Description' => $description
-        ));
+        $snapshotResult = $this->getContainer()->get('snapshoter.aws.ec2.client')->createSnapshot(
+            array(
+                'VolumeId' => $volumeId,
+                'Description' => $description
+            )
+        );
 
-        $this->getContainer()->get('snapshoter.aws.ec2.client')->createTags(array(
-            'Resources' => array($snapshotResult['SnapshotId']),
-            'Tags' => array(
-                array(
-                    'Key' => 'Name',
-                    'Value' => $tag
+        $this->getContainer()->get('snapshoter.aws.ec2.client')->createTags(
+            array(
+                'Resources' => array($snapshotResult['SnapshotId']),
+                'Tags' => array(
+                    array(
+                        'Key' => 'Name',
+                        'Value' => $tag
+                    )
                 )
             )
-        ));
+        );
 
         $output->writeln('Done');
     }
@@ -94,6 +108,7 @@ class CreateCommand extends ContainerAwareCommand
 
         if (count($volumeList) > 0) {
             $volume = end($volumeList);
+
             return $volume['VolumeId'];
         } else {
             throw new VolumeUnavailableException();

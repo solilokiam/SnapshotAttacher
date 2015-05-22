@@ -16,13 +16,40 @@ class AttachCommand extends ContainerAwareCommand
         $this
             ->setName('attach')
             ->setDescription('Attach a EBS volume to an ec2 instance from a given tagged snapshot')
-            ->addOption('device_key','m',InputOption::VALUE_REQUIRED,'the desired mount point as defined by aws.','/dev/sdf')
-            ->addOption('device_value','dv',InputOption::VALUE_REQUIRED,'the desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. default: /dev/xvdf','/dev/xvdf')
-            ->addOption('volume_size','s',InputOption::VALUE_REQUIRED,'The desired initial volume size by default it will be snapshot size')
-            ->addOption('availability_zone','z',InputOption::VALUE_REQUIRED,"the availability_zone in which to create the volume",'eu-west-1b')
-            ->addOption('instance_id',null,InputOption::VALUE_REQUIRED,'The instance id to attach the new volume, if not defined it will try to do it in the current machine')
-            ->addArgument('snapshot_tag',InputArgument::REQUIRED,"the snapshot tag you're looking for");
-        ;
+            ->addOption(
+                'device_key',
+                'm',
+                InputOption::VALUE_REQUIRED,
+                'the desired mount point as defined by aws.',
+                '/dev/sdf'
+            )
+            ->addOption(
+                'device_value',
+                'dv',
+                InputOption::VALUE_REQUIRED,
+                'the desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. default: /dev/xvdf',
+                '/dev/xvdf'
+            )
+            ->addOption(
+                'volume_size',
+                's',
+                InputOption::VALUE_REQUIRED,
+                'The desired initial volume size by default it will be snapshot size'
+            )
+            ->addOption(
+                'availability_zone',
+                'z',
+                InputOption::VALUE_REQUIRED,
+                "the availability_zone in which to create the volume",
+                'eu-west-1b'
+            )
+            ->addOption(
+                'instance_id',
+                null,
+                InputOption::VALUE_REQUIRED,
+                'The instance id to attach the new volume, if not defined it will try to do it in the current machine'
+            )
+            ->addArgument('snapshot_tag', InputArgument::REQUIRED, "the snapshot tag you're looking for");;
     }
 
     /**
@@ -48,7 +75,6 @@ class AttachCommand extends ContainerAwareCommand
             throw new SnapshotUnavailableException();
         }
     }
-
 
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -95,7 +121,7 @@ class AttachCommand extends ContainerAwareCommand
 
         $volumeId = $volume['VolumeId'];
 
-        $this->getContainer()->get('snapshoter.waiter.volume_available')->wait(array('VolumeId' => $volumeId),10,3);
+        $this->getContainer()->get('snapshoter.waiter.volume_available')->wait(array('VolumeId' => $volumeId), 10, 3);
 
         return $volumeId;
     }

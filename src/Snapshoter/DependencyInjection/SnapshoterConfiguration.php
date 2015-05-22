@@ -18,14 +18,15 @@ class SnapshoterConfiguration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->arrayNode('aws')
-                    ->children()
-                        ->scalarNode('key')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('secret')->isRequired()->cannotBeEmpty()->end()
-                        ->scalarNode('region')->isRequired()->cannotBeEmpty()->end()
-                    ->end()
-                ->end()
+            ->arrayNode('aws')
+            ->children()
+            ->scalarNode('key')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('secret')->isRequired()->cannotBeEmpty()->end()
+            ->scalarNode('region')->isRequired()->cannotBeEmpty()->end()
+            ->end()
+            ->end()
             ->end();
+
         return $treeBuilder;
     }
 

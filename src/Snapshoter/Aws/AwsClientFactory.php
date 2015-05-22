@@ -8,19 +8,20 @@ class AwsClientFactory
 {
     private $awsClient;
 
-    function __construct($key,$secret,$region)
+    function __construct($key, $secret, $region)
     {
-        $this->awsClient = Aws::factory(array(
-            'key' => $key,
-            'secret' => $secret,
-            'region' => $region
-        ));
+        $this->awsClient = Aws::factory(
+            array(
+                'key' => $key,
+                'secret' => $secret,
+                'region' => $region
+            )
+        );
     }
 
     private function get($service)
     {
-        if(!$this->awsClient)
-        {
+        if (!$this->awsClient) {
             throw new InvalidAwsContainerException("Cannot load '{$service}' service. The AWS container is invalid.");
         }
 

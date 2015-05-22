@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 8/05/15
- * Time: 13:25
- */
-
 namespace Snapshoter\Command;
 
 
@@ -31,8 +24,7 @@ class ContainerAwareCommand extends Command
 
         $pharFile = \Phar::running(false);
 
-        if('' === $pharFile)
-        {
+        if ('' === $pharFile) {
             $loader = new YamlFileLoader($this->container, new FileLocator(__DIR__.'/../../../'));
         } else {
             $loader = new YamlFileLoader($this->container, new FileLocator(dirname($pharFile)));

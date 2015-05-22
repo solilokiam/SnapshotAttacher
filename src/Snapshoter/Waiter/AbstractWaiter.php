@@ -3,9 +3,9 @@ namespace Snapshoter\Waiter;
 
 abstract class AbstractWaiter
 {
-    public function wait($waiterParams,$interval,$times)
+    public function wait($waiterParams, $interval, $times)
     {
-        for($i = 0;$i<$times;$i++) {
+        for ($i = 0; $i < $times; $i++) {
             if ($this->checkWaitContition($waiterParams)) {
                 return;
             }

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 14/05/15
- * Time: 17:50
- */
-
 namespace Snapshoter\Waiter;
 
 

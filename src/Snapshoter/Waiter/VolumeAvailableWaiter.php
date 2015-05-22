@@ -16,13 +16,14 @@ class VolumeAvailableWaiter extends AbstractWaiter
 
     protected function checkWaitContition($waiterParams)
     {
-        $volumesReturn = $this->ec2Client->describeVolumes(array(
-            'VolumeIds' => array($waiterParams['VolumeId'])
-        ));
+        $volumesReturn = $this->ec2Client->describeVolumes(
+            array(
+                'VolumeIds' => array($waiterParams['VolumeId'])
+            )
+        );
 
         $volumes = $volumesReturn['Volumes'];
-        if(count($volumes) > 0)
-        {
+        if (count($volumes) > 0) {
             return $volumes[0]['State'] == 'available';
         } else {
             throw new InvalidVolumeException();

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 8/05/15
- * Time: 14:02
- */
-
 namespace Snapshoter\Waiter;
 
 
@@ -23,13 +16,14 @@ class VolumeInUseWaiter extends AbstractWaiter
 
     protected function checkWaitContition($waiterParams)
     {
-        $volumesReturn = $this->ec2Client->describeVolumes(array(
-            'VolumeIds' => array($waiterParams['VolumeId'])
-        ));
+        $volumesReturn = $this->ec2Client->describeVolumes(
+            array(
+                'VolumeIds' => array($waiterParams['VolumeId'])
+            )
+        );
 
         $volumes = $volumesReturn['Volumes'];
-        if(count($volumes) > 0)
-        {
+        if (count($volumes) > 0) {
             return $volumes[0]['State'] == 'in_use';
         } else {
             throw new InvalidVolumeException();

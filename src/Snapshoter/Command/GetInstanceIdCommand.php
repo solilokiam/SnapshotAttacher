@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: miquel
- * Date: 22/05/15
- * Time: 9:45
- */
-
 namespace Snapshoter\Command;
 
 
@@ -26,7 +19,7 @@ class GetInstanceIdCommand extends ContainerAwareCommand
 
         $instanceId = $metadataClient->getInstanceId();
 
-        if($instanceId) {
+        if ($instanceId) {
             $output->writeln($instanceId);
         } else {
             $output->writeln('No instance found');
