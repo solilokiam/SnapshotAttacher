@@ -5,9 +5,11 @@ require __DIR__.'/../vendor/autoload.php';
 
 use \Snapshoter\Command\AttachCommand;
 use \Snapshoter\Command\CreateCommand;
+use \Snapshoter\Command\GetInstanceIdCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application('Snapshoter', '@package_version@');
 $application->add(new AttachCommand());
 $application->add(new CreateCommand());
+$application->add(new GetInstanceIdCommand());
 $application->run();
