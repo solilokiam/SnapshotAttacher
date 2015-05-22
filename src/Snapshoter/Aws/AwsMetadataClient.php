@@ -11,10 +11,12 @@ namespace Snapshoter\Aws;
 
 class AwsMetadataClient
 {
-    private $baseUrl = 'http://169.254.169.254/latest/meta-data/';
+    private $baseUrl = 'http://169.254.169.254/latest/meta-data';
 
     public function getInstanceId()
     {
-        return file_get_contents($this->baseUrl.'instance-id');
+        $instanceId = @file_get_contents($this->baseUrl.'/instance-id');
+
+        return $instanceId;
     }
 }

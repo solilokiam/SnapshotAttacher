@@ -59,7 +59,7 @@ class CreateCommand extends ContainerAwareCommand
      */
     private function getInstanceId(InputInterface $input)
     {
-        if (!$input->hasOption('instance_id')) {
+        if (!$input->hasOption('instance_id') || $input->getOption('instance_id') !== null) {
             $instanceId = $this->getContainer()->get('snapshoter.aws.metadata.client')->getInstanceId();
             $localInstance = true;
 
