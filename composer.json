@@ -8,6 +8,7 @@
     ],
     "minimum-stability": "dev",
     "require": {
+      "herrera-io/phar-update": "dev-master",
       "symfony/dependency-injection": "2.7.*@dev",
       "symfony/config": "2.7.*@dev",
       "symfony/console": "2.7.*@dev",
