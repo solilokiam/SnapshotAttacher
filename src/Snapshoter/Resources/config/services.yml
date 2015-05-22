@@ -10,7 +10,7 @@ services:
         factory: ["@snapshoter.aws.clientfactory",getEc2]
 
     snapshoter.aws.metadata.client:
-        class: Snapshoter\Aws\AesMetadataClient
+        class: Snapshoter\Aws\AwsMetadataClient
 
     snapshoter.waiter.volume_available:
         class: Snapshoter\Waiter\VolumeAvailableWaiter
