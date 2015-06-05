@@ -44,6 +44,7 @@ The Attach command is used to create a volume from the selected snapshot and the
 
 ```
 Snapshoter.phar attach [options] [--] <snapshot_tag>
+```
 
 ####Arguments
 snapshot_tag: The name of the snapshot tag that has to be used to create and attach the volume
