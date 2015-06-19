@@ -3,6 +3,7 @@ namespace Snapshoter\Command;
 
 use Snapshoter\Aws\AwsClientFactory;
 use Snapshoter\Exception\SnapshotUnavailableException;
+use Snapshoter\Sorter\SnapshotResultSorter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,7 +50,7 @@ class AttachCommand extends ContainerAwareCommand
                 InputOption::VALUE_REQUIRED,
                 'The instance id to attach the new volume, if not defined it will try to do it in the current machine'
             )
-            ->addArgument('snapshot_tag', InputArgument::REQUIRED, "the snapshot tag you're looking for");;
+            ->addArgument('snapshot_tag', InputArgument::REQUIRED, "the snapshot tag you're looking for");
     }
 
     /**
@@ -67,7 +68,8 @@ class AttachCommand extends ContainerAwareCommand
                 )
             )
         );
-        $snapshotsList = $returnObj['Snapshots'];
+
+        $snapshotsList = SnapshotResultSorter::sort($returnObj['Snapshots']);
 
         if (count($snapshotsList) > 0) {
             return end($snapshotsList);

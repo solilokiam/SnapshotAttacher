@@ -63,6 +63,20 @@ This commands return the instanceid of the EC2 instance that has snapshoter inst
 Snapshoter.phar instanceid
 ```
 
+###delete
+The delete command is used to delete the all snapshots created with a given tag or delete only one snapshot with the specified id.
+```
+Snapshoter.phar delete [options] [--] [<snapshot_tag>]
+```
+
+####Arguments
+snapshot_tag: The name of the snapshot tag that will be used to delete the snapshots
+
+####Options
+This command supports the following options:
+* `-i`, `--snapshotId=SNAPSHOT_ID`: The id of the snapshot to delete if no tag has been specified
+* `-p`, '--pardon=PARDON': The number of snapshots to pardon. The n last snapshots will not be deleted
+
 ###update
 This command self-updates the snapshoter.phar to the latest version
 
