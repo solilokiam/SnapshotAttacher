@@ -55,6 +55,8 @@ This command supports the following options:
 * `-s`, `--volume_size=VOLUME_SIZE`: The desired initial volume size by default it will be snapshot size
 * `-z`, `--availability_zone=AVAILABILITY_ZONE`: The availability_zone in which to create the volume. By default: "eu-west-1b"
 * `--instance_id=INSTANCE_ID`: The instance id to attach the new volume, if not defined it will try to do it in the current machine
+* `--delete_on_termination`: The created volume will be deleted on instance termination
+* `--device_value`: The desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. By default: /dev/xvdf
 
 ###instanceid
 This commands return the instanceid of the EC2 instance that has snapshoter installed

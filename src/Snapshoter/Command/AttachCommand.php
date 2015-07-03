@@ -21,14 +21,14 @@ class AttachCommand extends ContainerAwareCommand
                 'device_key',
                 'm',
                 InputOption::VALUE_REQUIRED,
-                'the desired mount point as defined by aws.',
+                'The desired mount point as defined by aws.',
                 '/dev/sdf'
             )
             ->addOption(
                 'device_value',
-                'dv',
+                null,
                 InputOption::VALUE_REQUIRED,
-                'the desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. default: /dev/xvdf',
+                'The desired mount point as defined by your os.  For example ubuntu turns /dev/sdf to /dev/xvdf. default: /dev/xvdf',
                 '/dev/xvdf'
             )
             ->addOption(
@@ -41,7 +41,7 @@ class AttachCommand extends ContainerAwareCommand
                 'availability_zone',
                 'z',
                 InputOption::VALUE_REQUIRED,
-                "the availability_zone in which to create the volume",
+                "The availability_zone in which to create the volume",
                 'eu-west-1b'
             )
             ->addOption(
@@ -49,6 +49,12 @@ class AttachCommand extends ContainerAwareCommand
                 null,
                 InputOption::VALUE_REQUIRED,
                 'The instance id to attach the new volume, if not defined it will try to do it in the current machine'
+            )
+            ->addOption(
+                'delete_on_termination',
+                null,
+                InputOption::VALUE_NONE,
+                'The attached volume will be deleted on instance termination'
             )
             ->addArgument('snapshot_tag', InputArgument::REQUIRED, "the snapshot tag you're looking for");
     }
@@ -86,7 +92,7 @@ class AttachCommand extends ContainerAwareCommand
         $availabilityZone = $input->getOption('availability_zone');
         $deviceKey = $input->getOption('device_key');
         $deviceValue = $input->getOption('device_value');
-
+        $deleteOnTermination = $input->hasOption('delete_on_termination');
         $desiredVolumeSize = $input->getOption('volume_size');
 
         $snapshotData = $this->getMostRecentSnapshot($snapshotTag);
@@ -102,6 +108,26 @@ class AttachCommand extends ContainerAwareCommand
         $this->attachVolume($volumeId, $instanceId, $deviceKey, $localInstance, $deviceValue);
 
         $output->writeln('Volume attached:'.$volumeId.' in '.$deviceValue);
+
+        if ($deleteOnTermination) {
+            $this->getContainer()->get('snapshoter.aws.ec2.client')->modifyInstanceAttribute(
+                array(
+                    'Attribute' => 'blockDeviceMapping',
+                    'BlockDeviceMappings' => array(
+                        array(
+                            'DeviceName' => $deviceKey,
+                            'Ebs' => array(
+                                'DeleteOnTermination' => true,
+                                'VolumeId' => $volumeId
+                            )
+                        )
+                    ),
+                    'InstanceId' => $instanceId
+                )
+            );
+
+            $output->writeln('Volume Marked as delete on termination');
+        }
     }
 
     /**
