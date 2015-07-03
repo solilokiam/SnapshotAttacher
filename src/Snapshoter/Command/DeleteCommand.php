@@ -65,11 +65,14 @@ class DeleteCommand extends ContainerAwareCommand
         }
 
         if (count($snapshots) == 0) {
-            throw new SnapshotUnavailableException();
+            $output->writeln('No snapshots ready to delete.');
+
+            return;
         }
 
         foreach ($snapshots as $snapshot) {
             $ec2Client->deleteSnapshot(array('SnapshotId' => $snapshot['SnapshotId']));
+            $output->writeln($snapshot['SnapshotId'].' deleted.');
         }
     }
 
